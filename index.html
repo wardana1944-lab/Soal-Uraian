@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kuis Interaktif</title>
+  <title>Tugas Rumah</title>
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
@@ -119,7 +119,7 @@
       ctx.fillRect(0, 0, canvas.width, canvas.height);
       ctx.fillStyle = '#1e3a5f';
       ctx.font = 'bold 30px Arial';
-      ctx.fillText(`HASIL KUIS: ${studentName}`, 50, 80);
+      ctx.fillText(`LEMBAR JAWAB: ${studentName}`, 50, 80);
       
       let y = 150;
       questions.forEach((q, i) => {
@@ -134,7 +134,7 @@
       });
 
       const link = document.createElement('a');
-      link.download = 'hasil_kuis.jpg';
+      link.download = 'Lembar-jawab.jpg';
       link.href = canvas.toDataURL('image/jpeg');
       link.click();
     }
@@ -143,3 +143,4 @@
   </script>
 </body>
 </html>
+
