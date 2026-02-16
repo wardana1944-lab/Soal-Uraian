@@ -1,22 +1,32 @@
 {
   "config": {
-    "quiz_title": "KUIS FLORA & FAUNA"
+    "quiz_title": "KUIS URAIAN FLORA & FAUNA"
   },
   "questions": [
     {
       "id": 1,
-      "question": "Sebutkan 3 ciri khas hewan tipe Asiatis!",
-      "hint": "Fokus pada ukuran tubuh dan jenis mamalia"
+      "question": "Jelaskan mengapa Indonesia memiliki keanekaragaman flora dan fauna yang sangat tinggi dibandingkan negara lain!",
+      "hint": ""
     },
     {
       "id": 2,
-      "question": "Mengapa komodo hanya ditemukan di Nusa Tenggara?",
-      "hint": "Hubungkan dengan habitat endemik"
+      "question": "Sebutkan dan jelaskan perbedaan karakteristik antara fauna tipe Asiatis dengan fauna tipe Australis!",
+      "hint": ""
     },
     {
       "id": 3,
-      "question": "Apa fungsi kantong semar bagi kelangsungan hidupnya?",
-      "hint": "Cara tumbuhan ini mencari nutrisi"
+      "question": "Mengapa pelestarian hutan mangrove sangat penting bagi ekosistem pesisir dan biota laut di Indonesia?",
+      "hint": ""
+    },
+    {
+      "id": 4,
+      "question": "Bagaimana pengaruh letak geografis Indonesia terhadap persebaran tumbuhan (flora) di wilayah Indonesia bagian timur?",
+      "hint": ""
+    },
+    {
+      "id": 5,
+      "question": "Sebutkan 3 hewan endemik Indonesia yang terancam punah dan berikan saran langkah nyata untuk melindunginya!",
+      "hint": ""
     }
   ]
 }
