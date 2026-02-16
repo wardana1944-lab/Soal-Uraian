@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="id" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kuis Uraian Interaktif - Flora & Fauna</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { font-family: 'Plus Jakarta Sans', sans-serif; }
+    .gradient-bg { background: linear-gradient(135deg, #1e3a5f 0%, #0f2439 50%, #0a1929 100%); }
+    .card-glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.08); }
+    .btn-primary { background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); transition: all 0.3s ease; }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4); }
+    .fade-in { animation: fadeIn 0.4s ease-out; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+  </style>
+</head>
+<body class="h-full gradient-bg text-white overflow-auto">
+  <div id="app" class="w-full min-h-full p-4 md:p-8">
+    <div class="max-w-3xl mx-auto">
+      <header class="text-center mb-8 fade-in">
+        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-500/20 text-blue-300 text-sm mb-4">
+          <span>🌿</span> <span>Kuis Flora & Fauna</span>
+        </div>
+        <h1 id="quiz-title" class="text-3xl md:text-4xl font-bold mb-2">Kuis Pengetahuan Alam</h1>
+      </header>
+
+      <div id="student-name-form" class="card-glass rounded-2xl p-6 md:p-8 mb-6 fade-in">
+        <label class="block text-sm font-medium text-slate-300 mb-2">Nama Lengkap Siswa:</label>
+        <input id="student-name" type="text" class="w-full px-4 py-3 bg-slate-800/50 border border-slate-600/50 rounded-xl text-white outline-none focus:ring-2 focus:ring-blue-500" placeholder="Ketik namamu di sini...">
+        <button onclick="startQuiz()" class="btn-primary w-full mt-4 px-6 py-3 rounded-xl font-medium text-white">Mulai Kuis 🚀</button>
+      </div>
+
+      <main id="quiz-container" class="hidden card-glass rounded-2xl p-6 md:p-8 mb-6 fade-in"></main>
+
+      <div id="results-container" class="hidden fade-in"></div>
+    </div>
+  </div>
+
+  <script>
+    const questions = [
+      { id: 1, question: "Jelaskan mengapa Indonesia memiliki keanekaragaman flora dan fauna yang sangat tinggi!", hint: "Pikirkan letak geografis dan iklim" },
+      { id: 2, question: "Apa perbedaan mencolok antara Fauna tipe Asiatis dan tipe Australis di Indonesia?", hint: "Sebutkan contoh hewannya juga" },
+      { id: 3, question: "Mengapa burung Cendrawasih disebut sebagai burung surga dan bagaimana cara melestarikannya?", hint: "Fokus pada keindahan dan ancaman perburuan" },
+      { id: 4, question: "Jelaskan peran hutan mangrove bagi ekosistem pesisir di Indonesia!", hint: "Hubungkan dengan abrasi dan tempat tinggal ikan" },
+      { id: 5, question: "Sebutkan 3 flora endemik Indonesia yang kamu ketahui dan daerah asalnya!", hint: "Contoh: Rafflesia arnoldii dari Bengkulu" }
+    ];
+
+    let currentQuestion = 0;
+    let answers = new Array(questions.length).fill('');
+    let studentName = '';
+
+    function startQuiz() {
+      const nameInput = document.getElementById('student-name').value.trim();
+      if (!nameInput) return alert("Silakan isi namamu dulu!");
+      studentName = nameInput;
+      document.getElementById('student-name-form').classList.add('hidden');
+      document.getElementById('quiz-container').classList.remove('hidden');
+      renderQuestion();
+    }
+
+    function renderQuestion() {
+      const q = questions[currentQuestion];
+      const container = document.getElementById('quiz-container');
+      container.innerHTML = `
+        <div class="mb-6">
+          <span class="text-blue-400 font-bold">Soal ${currentQuestion + 1} dari ${questions.length}</span>
+          <h2 class="text-xl md:text-2xl font-semibold mt-2 leading-relaxed">${q.question}</h2>
+          <p class="text-slate-400 text-sm mt-2 italic">💡 Petunjuk: ${q.hint}</p>
+        </div>
+        <textarea id="answer-input" class="w-full h-40 px-4 py-3 bg-slate-800/50 border border-slate-600/50 rounded-xl text-white outline-none focus:ring-2 focus:ring-blue-500 resize-none" placeholder="Tulis jawabanmu secara lengkap...">${answers[currentQuestion]}</textarea>
+        <div class="flex gap-3 mt-6">
+          <button onclick="prevQuestion()" class="flex-1 px-4 py-3 rounded-xl border border-slate-500 text-sm ${currentQuestion === 0 ? 'hidden' : ''}">Kembali</button>
+          <button onclick="nextQuestion()" class="btn-primary flex-[2] px-4 py-3 rounded-xl font-medium">${currentQuestion === questions.length - 1 ? 'Selesai ✓' : 'Lanjut →'}</button>
+        </div>
+      `;
+    }
+
+    function nextQuestion() {
+      answers[currentQuestion] = document.getElementById('answer-input').value;
+      if (currentQuestion < questions.length - 1) {
+        currentQuestion++;
+        renderQuestion();
+      } else {
+        showResults();
+      }
+    }
+
+    function prevQuestion() {
+      answers[currentQuestion] = document.getElementById('answer-input').value;
+      if (currentQuestion > 0) {
+        currentQuestion--;
+        renderQuestion();
+      }
+    }
+
+    function showResults() {
+      document.getElementById('quiz-container').classList.add('hidden');
+      const res = document.getElementById('results-container');
+      res.classList.remove('hidden');
+      res.innerHTML = `
+        <div class="card-glass rounded-2xl p-8 text-center">
+          <h2 class="text-3xl font-bold mb-4">Kuis Selesai! 🎉</h2>
+          <p class="mb-6">Terima kasih, <span class="text-blue-400">${studentName}</span>. Jawabanmu telah tersimpan sementara.</p>
+          <button onclick="downloadAsImage()" id="btn-dl" class="btn-primary w-full px-6 py-4 rounded-xl font-bold mb-4">📸 DOWNLOAD HASIL (JPG)</button>
+          <button onclick="location.reload()" class="text-slate-400 text-sm hover:underline">Ulangi Kuis</button>
+        </div>
+      `;
+    }
+
+    // FUNGSI UTAMA DOWNLOAD GAMBAR
+    function downloadAsImage() {
+      const btn = document.getElementById('btn-dl');
+      btn.textContent = "⏳ Memproses...";
+      btn.disabled = true;
+
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      canvas.width = 1000;
+      canvas.height = 1200; // Tinggi awal
+
+      // Background
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Header
+      ctx.fillStyle = '#1e3a5f';
+      ctx.fillRect(0, 0, canvas.width, 120);
+      ctx.fillStyle = '#ffffff';
+      ctx.font = 'bold 32px Arial';
+      ctx.textAlign = 'center';
+      ctx.fillText("LAPORAN HASIL KUIS FLORA & FAUNA", 500, 70);
+
+      // Info Siswa
+      ctx.textAlign = 'left';
+      ctx.fillStyle = '#333333';
+      ctx.font = 'bold 20px Arial';
+      ctx.fillText(`Nama Siswa : ${studentName}`, 50, 170);
+      ctx.fillText(`Tanggal    : ${new Date().toLocaleDateString('id-ID')}`, 50, 205);
+
+      let y = 280;
+      questions.forEach((q, i) => {
+        // Baris Soal
+        ctx.fillStyle = '#f1f5f9';
+        ctx.fillRect(45, y - 25, 910, 35);
+        ctx.fillStyle = '#1e3a5f';
+        ctx.font = 'bold 18px Arial';
+        ctx.fillText(`SOAL ${i + 1}: ${q.question.substring(0, 75)}...`, 50, y);
+        
+        y += 45;
+        // Jawaban
+        ctx.fillStyle = '#444444';
+        ctx.font = '16px Arial';
+        const lines = wrapText(ctx, answers[i] || "Tidak ada jawaban", 880);
+        lines.forEach(line => {
+          ctx.fillText(line, 60, y);
+          y += 25;
+        });
+        y += 50;
+      });
+
+      // Proses Download Link
+      try {
+        const dataUrl = canvas.toDataURL('image/jpeg', 0.8);
+        const link = document.createElement('a');
+        link.download = `Kuis_${studentName.replace(/\s/g, '_')}.jpg`;
+        link.href = dataUrl;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      } catch (e) {
+        alert("Gagal mendownload otomatis. Silakan screenshot layar hasil kuis.");
+      } finally {
+        btn.textContent = "📸 DOWNLOAD HASIL (JPG)";
+        btn.disabled = false;
+      }
+    }
+
+    function wrapText(ctx, text, maxWidth) {
+      const words = text.split(' ');
+      const lines = [];
+      let currentLine = '';
+      for (let n = 0; n < words.length; n++) {
+        let testLine = currentLine + words[n] + ' ';
+        if (ctx.measureText(testLine).width > maxWidth && n > 0) {
+          lines.push(currentLine);
+          currentLine = words[n] + ' ';
+        } else {
+          currentLine = testLine;
+        }
+      }
+      lines.push(currentLine);
+      return lines;
+    }
+  </script>
+</body>
+</html>
