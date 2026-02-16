@@ -1,0 +1,22 @@
+{
+  "config": {
+    "quiz_title": "KUIS FLORA & FAUNA"
+  },
+  "questions": [
+    {
+      "id": 1,
+      "question": "Sebutkan 3 ciri khas hewan tipe Asiatis!",
+      "hint": "Fokus pada ukuran tubuh dan jenis mamalia"
+    },
+    {
+      "id": 2,
+      "question": "Mengapa komodo hanya ditemukan di Nusa Tenggara?",
+      "hint": "Hubungkan dengan habitat endemik"
+    },
+    {
+      "id": 3,
+      "question": "Apa fungsi kantong semar bagi kelangsungan hidupnya?",
+      "hint": "Cara tumbuhan ini mencari nutrisi"
+    }
+  ]
+}
